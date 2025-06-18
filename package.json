@@ -1,0 +1,12 @@
+{
+  "devDependencies": {
+    "prettier": "^3.5.3",
+    "prisma": "^6.9.0"
+  },
+  "scripts": {
+    "format": "prettier . --write"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.9.0"
+  }
+}

@@ -1,0 +1,43 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: myuniverse
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.Backend
+    depends_on:
+      - db
+    ports:
+      - '4000:4000'
+    environment:
+      DATABASE_URL: postgres://myuser:mypassword@db:5432/myuniverse
+    volumes:
+      - ./backend:/app
+    command: npm run dev
+
+#  frontend:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile.Frontend
+#    depends_on:
+#      - backend
+#    ports:
+#      - '3000:3000'
+#    volumes:
+#      - ./frontend:/app
+#    command: npm run dev
+
+volumes:
+  postgres-data:
